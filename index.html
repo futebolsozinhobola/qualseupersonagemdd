@@ -169,12 +169,40 @@
             margin-bottom: 10px;
         }
 
-        .modifiers {
+        .stats-block {
+            display: flex;
+            gap: 20px;
+            width: 100%;
             margin-top: 20px;
+        }
+
+        .hp-section {
+            background-color: #c8b79b;
+            padding: 15px;
+            border-radius: 5px;
+            text-align: center;
+            width: 30%;
+        }
+
+        .hp-section h3 {
+            margin: 0;
+            font-size: 0.9rem;
+            color: #4b3a26;
+        }
+
+        .hp-section p {
+            margin: 0;
+            font-family: 'Cinzel', serif;
+            font-size: 1.8rem;
+            color: #8c2317;
+        }
+        
+        .modifiers {
             background-color: #4b3a26;
             color: #fffdf7;
             padding: 15px;
             border-radius: 5px;
+            flex-grow: 1;
         }
         
         .equipment {
@@ -257,9 +285,15 @@
                 </div>
             </div>
 
-            <div class="modifiers">
-                <h3>Modificadores Finais de Atributo</h3>
-                <p id="final-modifiers"></p>
+            <div class="stats-block">
+                <div class="hp-section">
+                    <h3>Pontos de Vida</h3>
+                    <p id="starting-hp"></p>
+                </div>
+                <div class="modifiers">
+                    <h3>Modificadores de Atributo</h3>
+                    <p id="final-modifiers"></p>
+                </div>
             </div>
             
             <div class="equipment">
@@ -312,6 +346,7 @@
             const classes = {
                 barbaro: {
                     name: 'Bárbaro',
+                    hitDie: 12,
                     description: 'Um guerreiro feroz que canaliza sua fúria primordial em combate. Sua força bruta e resistência são incomparáveis no campo de batalha.',
                     attributePriority: ['strength', 'constitution', 'dexterity', 'wisdom', 'intelligence', 'charisma'],
                     startingEquipment: ["Um machado grande (ou outra arma marcial)", "Dois machados de mão", "Quatro azagaias", "Pacote de Explorador (incluindo mochila, saco de dormir, kit de refeição, caixa de fogo, 10 tochas, 10 dias de rações, cantil e 15m de corda)"],
@@ -325,6 +360,7 @@
                 },
                 bardo: {
                     name: 'Bardo',
+                    hitDie: 8,
                     description: 'Um mestre da música, da magia e do carisma. Bardos usam suas palavras e canções para inspirar aliados, desmoralizar inimigos e manipular a própria realidade.',
                     attributePriority: ['charisma', 'dexterity', 'constitution', 'intelligence', 'wisdom', 'strength'],
                     startingEquipment: ["Uma rapieira", "Um alaúde (ou outro instrumento)", "Armadura de couro e uma adaga", "Escolha um: Pacote de Diplomata (inclui baú, 2 caixas p/ mapas, roupas finas, tinta, caneta, lampião, óleo, papel, perfume, cera, sabão) OU Pacote de Artista (inclui mochila, saco de dormir, 2 fantasias, 5 velas, rações, cantil, kit de disfarce)"],
@@ -338,6 +374,7 @@
                 },
                 clerigo: {
                     name: 'Clérigo',
+                    hitDie: 8,
                     description: 'Um guerreiro divino que canaliza o poder de sua fé. Clérigos são curandeiros, protetores e combatentes, usando magia sagrada para ajudar aliados e destruir inimigos.',
                     attributePriority: ['wisdom', 'constitution', 'strength', 'charisma', 'dexterity', 'intelligence'],
                     startingEquipment: ["Uma maça", "Armadura de cota de malha", "Um escudo e um símbolo sagrado", "Escolha um: Pacote de Sacerdote (inclui mochila, cobertor, 10 velas, caixa de fogo, caixa de esmolas, incenso, paramentos, rações, cantil) OU Pacote de Explorador (inclui mochila, saco de dormir, kit de refeição, tochas, rações, cantil, 15m de corda)"],
@@ -351,6 +388,7 @@
                 },
                 druida: {
                     name: 'Druida',
+                    hitDie: 8,
                     description: 'Um sacerdote da natureza, que extrai poder do mundo natural. Druidas podem se transformar em animais, comandar plantas e invocar a fúria dos elementos.',
                     attributePriority: ['wisdom', 'constitution', 'dexterity', 'intelligence', 'strength', 'charisma'],
                     startingEquipment: ["Um escudo de madeira", "Uma cimitarra", "Armadura de couro e um foco druídico", "Pacote de Explorador (incluindo mochila, saco de dormir, kit de refeição, caixa de fogo, 10 tochas, 10 dias de rações, cantil e 15m de corda)"],
@@ -364,6 +402,7 @@
                 },
                 guerreiro: {
                     name: 'Guerreiro',
+                    hitDie: 10,
                     description: 'Um mestre do combate armado. O guerreiro é versátil, disciplinado e letal, seja com uma espada, um arco ou qualquer outra arma que empunhe.',
                     attributePriority: ['strength', 'constitution', 'dexterity', 'wisdom', 'charisma', 'intelligence'],
                     startingEquipment: ["Cota de malha", "Uma espada longa e um escudo", "Um arco longo e 20 flechas", "Escolha um: Pacote de Aventureiro (inclui mochila, pé de cabra, martelo, 10 pítons, 10 tochas, caixa de fogo, 10 dias de rações, cantil) OU Pacote de Explorador (inclui mochila, saco de dormir, kit de refeição, tochas, rações, cantil, 15m de corda)"],
@@ -377,6 +416,7 @@
                 },
                 monge: {
                     name: 'Monge',
+                    hitDie: 8,
                     description: 'Um mestre das artes marciais, que usa o poder de seu corpo e mente. Monges são rápidos, mortais e capazes de feitos sobre-humanos através de sua energia interior, o Ki.',
                     attributePriority: ['dexterity', 'wisdom', 'constitution', 'strength', 'charisma', 'intelligence'],
                     startingEquipment: ["Uma espada curta", "10 dardos", "Escolha um: Pacote de Aventureiro (inclui mochila, pé de cabra, martelo, 10 pítons, 10 tochas, rações, cantil) OU Pacote de Explorador (inclui mochila, saco de dormir, kit de refeição, tochas, rações, cantil, 15m de corda)"],
@@ -390,6 +430,7 @@
                 },
                 paladino: {
                     name: 'Paladino',
+                    hitDie: 10,
                     description: 'Um campeão sagrado que fez um juramento de proteger o bem e a justiça. Paladinos são guerreiros divinos, combinando poder marcial com magia sagrada.',
                     attributePriority: ['strength', 'charisma', 'constitution', 'wisdom', 'intelligence', 'dexterity'],
                     startingEquipment: ["Uma espada longa e um escudo", "Cota de malha", "Um símbolo sagrado", "Escolha um: Pacote de Sacerdote (inclui mochila, cobertor, 10 velas, caixa de esmolas, incenso, paramentos, rações, cantil) OU Pacote de Explorador (inclui mochila, saco de dormir, kit de refeição, tochas, rações, cantil, 15m de corda)"],
@@ -403,6 +444,7 @@
                 },
                 patrulheiro: {
                     name: 'Patrulheiro',
+                    hitDie: 10,
                     description: 'Um guerreiro das terras selvagens, especialista em rastrear e caçar. Patrulheiros são mestres do arco e da lâmina, com uma forte conexão com a natureza.',
                     attributePriority: ['dexterity', 'wisdom', 'constitution', 'intelligence', 'strength', 'charisma'],
                     startingEquipment: ["Armadura de couro batido", "Duas espadas curtas", "Um arco longo e 20 flechas", "Escolha um: Pacote de Aventureiro (inclui mochila, pé de cabra, martelo, 10 pítons, 10 tochas, rações, cantil) OU Pacote de Explorador (inclui mochila, saco de dormir, kit de refeição, tochas, rações, cantil, 15m de corda)"],
@@ -416,6 +458,7 @@
                 },
                 feiticeiro: {
                     name: 'Feiticeiro',
+                    hitDie: 6,
                     description: 'Um conjurador que nasceu com magia correndo em suas veias. Feiticeiros não estudam magia, eles a são, moldando-a com força de vontade e poder inato.',
                     attributePriority: ['charisma', 'constitution', 'dexterity', 'wisdom', 'intelligence', 'strength'],
                     startingEquipment: ["Uma besta leve e 20 virotes", "Uma bolsa de componentes arcanos", "Duas adagas", "Escolha um: Pacote de Aventureiro (inclui mochila, pé de cabra, martelo, 10 pítons, 10 tochas, rações, cantil) OU Pacote de Explorador (inclui mochila, saco de dormir, kit de refeição, tochas, rações, cantil, 15m de corda)"],
@@ -429,6 +472,7 @@
                 },
                 bruxo: {
                     name: 'Bruxo',
+                    hitDie: 8,
                     description: 'Um conjurador que obteve seu poder através de um pacto com uma entidade poderosa. Bruxos usam segredos arcanos e dons de outro mundo para atingir seus objetivos.',
                     attributePriority: ['charisma', 'constitution', 'dexterity', 'wisdom', 'intelligence', 'strength'],
                     startingEquipment: ["Uma besta leve e 20 virotes", "Uma bolsa de componentes arcanos", "Armadura de couro e uma adaga", "Escolha um: Pacote de Erudito (inclui mochila, livro, tinta, caneta, pergaminho, areia, faca) OU Pacote de Aventureiro (inclui mochila, pé de cabra, martelo, 10 pítons, 10 tochas, rações, cantil)"],
@@ -442,6 +486,7 @@
                 },
                 ladino: {
                     name: 'Ladino',
+                    hitDie: 8,
                     description: 'Um mestre da furtividade, do subterfúgio e da precisão. Ladinos atacam das sombras, desarmam armadilhas e usam sua astúcia para superar qualquer obstáculo.',
                     attributePriority: ['dexterity', 'charisma', 'constitution', 'intelligence', 'wisdom', 'strength'],
                     startingEquipment: ["Uma rapieira", "Um arco curto e 20 flechas", "Armadura de couro, duas adagas e ferramentas de ladrão", "Escolha um: Pacote de Assaltante (mochila, 1.000 esferas de metal, fio, sino, velas, pé de cabra, martelo, lampião, óleo, rações, caixa de fogo, cantil), Pacote de Aventureiro (mochila, pé de cabra, martelo, 10 pítons, 10 tochas, rações, cantil), ou Pacote de Explorador (mochila, saco de dormir, kit de refeição, tochas, rações, cantil, 15m de corda)"],
@@ -455,6 +500,7 @@
                 },
                 mago: {
                     name: 'Mago',
+                    hitDie: 6,
                     description: 'Um estudioso das artes arcanas que manipula a realidade através de feitiços. Magos controlam os elementos, conjuram ilusões e desintegram inimigos com poder arcano bruto.',
                     attributePriority: ['intelligence', 'constitution', 'dexterity', 'wisdom', 'charisma', 'strength'],
                     startingEquipment: ["Um cajado", "Uma bolsa de componentes arcanos", "Um grimório de feitiços", "Escolha um: Pacote de Erudito (inclui mochila, livro de conhecimento, tinta, caneta, 10 folhas de pergaminho, saquinho de areia, faca pequena) OU Pacote de Explorador (inclui mochila, saco de dormir, kit de refeição, tochas, rações, cantil, 15m de corda)"],
@@ -651,21 +697,30 @@
                     if(attr !== '_choice') {
                         baseScores[attr] += finalRace.modifiers[attr];
                     }
-                    // O Meio-Elfo é um caso especial que exigiria interface de usuário para escolher os bônus,
-                    // então estamos simplificando aqui, mas a estrutura permite a adição futura.
                 }
                 
                 let modifiersText = '';
                 const displayOrder = ['strength', 'dexterity', 'constitution', 'intelligence', 'wisdom', 'charisma'];
                 
+                let conModifier = 0;
+
                 displayOrder.forEach(attr => {
                     const finalScore = baseScores[attr];
                     const modifier = Math.floor((finalScore - 10) / 2);
+                    if(attr === 'constitution') {
+                        conModifier = modifier;
+                    }
                     const translatedAttr = attributeTranslations[attr];
                     modifiersText += `<strong>${translatedAttr}:</strong> ${modifier >= 0 ? '+' : ''}${modifier} &nbsp;&nbsp; `;
                 });
 
                 document.getElementById('final-modifiers').innerHTML = modifiersText.trim();
+                
+                // Calcular e exibir Pontos de Vida
+                const hitDieAvg = (finalClass.hitDie / 2) + 1;
+                const startingHp = hitDieAvg + 10 + conModifier;
+                document.getElementById('starting-hp').innerText = `${startingHp} PV`;
+
             }
 
             function generatePDF() {
@@ -674,6 +729,7 @@
                 
                 const title = document.getElementById('summary-title').innerText;
                 const description = document.getElementById('summary-combination-description').innerText;
+                const hp = document.getElementById('starting-hp').innerText;
                 const modifiersText = document.getElementById('final-modifiers').innerText.replace(/\s+/g, ' ').trim();
 
                 const positiveTraits = Array.from(document.querySelectorAll('#positive-traits li')).map(li => `- ${li.innerText}`);
@@ -696,7 +752,14 @@
                 doc.setFontSize(12);
                 const descLines = doc.splitTextToSize(description, page_width - (margin * 2));
                 doc.text(descLines, margin, y);
-                y += (descLines.length * 5) + 5;
+                y += (descLines.length * 5) + 8;
+                
+                // Pontos de Vida
+                doc.setFont('times', 'bold');
+                doc.text("Pontos de Vida Iniciais:", margin, y);
+                doc.setFont('times', 'normal');
+                doc.text(hp, margin + 55, y);
+                y += 8;
 
                 // Modificadores
                 doc.setFont('times', 'bold');
